@@ -17,14 +17,14 @@ public class HistorialAcciones {
     }
 
     public String obtenerUltimaAccion() {
-        if (historial.isEmpty()){
+        if (estaVacio()){
             return "No existio una ultima accion!!";
         }
         return historial.peek();
     }
 
     public String deshacerAccion() {
-        if(historial.isEmpty()){
+        if(estaVacio()){
             return "No existe nada por deshacer";
         }
         return historial.pop();
@@ -40,7 +40,7 @@ public class HistorialAcciones {
 
 
     public String mostrarHistorial() {
-        if (historial.isEmpty()){
+        if (estaVacio()){
             return "Historial Vacio";
         }
 
