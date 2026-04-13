@@ -18,14 +18,14 @@ public class HistorialAcciones {
 
     public String obtenerUltimaAccion() {
         if (estaVacio()){
-            return "No existio una ultima accion!!";
+            return " Sin acciones";
         }
         return historial.peek();
     }
 
     public String deshacerAccion() {
         if(estaVacio()){
-            return "No existe nada por deshacer";
+            return "Nada que deshacer";
         }
         return historial.pop();
     }
@@ -41,9 +41,15 @@ public class HistorialAcciones {
 
     public String mostrarHistorial() {
         if (estaVacio()){
-            return "Historial Vacio";
+            return "Historial vacío";
         }
-
-        return  historial.toString();
+    StringBuilder sb = new StringBuilder();
+        for (int i = historial.size()-1 ;i>=0; i--){
+            sb.append(historial.get(i));
+            if (i>0){
+                sb.append("\\n");
+            }
+        }
+        return  sb.toString();
     }
 }
