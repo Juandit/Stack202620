@@ -17,8 +17,8 @@ public class HistorialAcciones {
     }
 
     public String obtenerUltimaAccion() {
-        if (estaVacio()){
-            return " Sin acciones";
+        if (historial.isEmpty()){
+            return "Sin acciones";
         }
         return historial.peek();
     }
