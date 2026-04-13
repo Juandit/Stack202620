@@ -1,0 +1,101 @@
+name: Autograding por metodos
+
+on:
+  push:
+  repository_dispatch:
+
+permissions:
+  checks: write
+  actions: read
+  contents: read
+
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - name: Compilacion inicial
+        run: mvn -B -DskipTests compile
+
+      - name: Metodo registrarAccion
+        id: registrar-accion
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Metodo registrarAccion
+          setup-command: ""
+          command: mvn -q -Dtest=RegistrarAccionTest test
+          timeout: 10
+          max-score: 2
+
+      - name: Metodo obtenerUltimaAccion
+        id: obtener-ultima-accion
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Metodo obtenerUltimaAccion
+          setup-command: ""
+          command: mvn -q -Dtest=ObtenerUltimaAccionTest test
+          timeout: 10
+          max-score: 2
+
+      - name: Metodo deshacerAccion
+        id: deshacer-accion
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Metodo deshacerAccion
+          setup-command: ""
+          command: mvn -q -Dtest=DeshacerAccionTest test
+          timeout: 10
+          max-score: 2
+
+      - name: Metodo obtenerCantidadAcciones
+        id: obtener-cantidad-acciones
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Metodo obtenerCantidadAcciones
+          setup-command: ""
+          command: mvn -q -Dtest=ObtenerCantidadAccionesTest test
+          timeout: 10
+          max-score: 1
+
+      - name: Metodo estaVacio
+        id: esta-vacio
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Metodo estaVacio
+          setup-command: ""
+          command: mvn -q -Dtest=EstaVacioTest test
+          timeout: 10
+          max-score: 1
+
+      - name: Metodo mostrarHistorial
+        id: mostrar-historial
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Metodo mostrarHistorial
+          setup-command: ""
+          command: mvn -q -Dtest=MostrarHistorialTest test
+          timeout: 10
+          max-score: 2
+
+      - name: Autograding Reporter
+        uses: classroom-resources/autograding-grading-reporter@v1
+        env:
+          REGISTRAR-ACCION_RESULTS: "${{steps.registrar-accion.outputs.result}}"
+          OBTENER-ULTIMA-ACCION_RESULTS: "${{steps.obtener-ultima-accion.outputs.result}}"
+          DESHACER-ACCION_RESULTS: "${{steps.deshacer-accion.outputs.result}}"
+          OBTENER-CANTIDAD-ACCIONES_RESULTS: "${{steps.obtener-cantidad-acciones.outputs.result}}"
+          ESTA-VACIO_RESULTS: "${{steps.esta-vacio.outputs.result}}"
+          MOSTRAR-HISTORIAL_RESULTS: "${{steps.mostrar-historial.outputs.result}}"
+        with:
+          runners: registrar-accion,obtener-ultima-accion,deshacer-accion,obtener-cantidad-acciones,esta-vacio,mostrar-historial
