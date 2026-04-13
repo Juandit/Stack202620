@@ -44,10 +44,6 @@ public class HistorialAcciones {
             return "Historial Vacio";
         }
 
-        String Resultado = "";
-        for (String accion : historial){
-            Resultado +=  accion + "\n";
-        }
-        return Resultado;
+        return  historial.toString();
     }
 }
