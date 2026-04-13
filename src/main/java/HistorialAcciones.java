@@ -38,10 +38,16 @@ public class HistorialAcciones {
         return historial.isEmpty();
     }
 
+
     public String mostrarHistorial() {
         if (historial.isEmpty()){
-            return "His";
+            return "Historial Vacio";
         }
-        return "";
+
+        String Resultado = "";
+        for (String accion : historial){
+            Resultado +=  accion + "\n";
+        }
+        return Resultado;
     }
 }
